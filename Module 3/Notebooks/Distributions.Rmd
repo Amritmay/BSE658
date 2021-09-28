@@ -255,7 +255,18 @@ f_distribution <- rf(10000, 5, 10)
 histogram_f_distribution <- hist(f_distribution)
 plot(histogram_f_distribution$mids,histogram_f_distribution$density, type="l", col="blue", lwd=3)
 ```
+```{r}
+data("airquality")
+airquality
+a = hist(airquality$Ozone)
+plot(a$mids,a$density, type="l", col="blue", lwd=3)
+```
 
+```{r}
+c = rnorm(n = 200, mean = 165, sd = 25)
+hist(c)
+d = 
+```
 
 
 The End

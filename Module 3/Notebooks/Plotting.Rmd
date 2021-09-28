@@ -58,10 +58,10 @@ Let's try specifying some parameters to customize our plot:
 
 ```{r}
 plot( x = Fibonacci,
-main = "You specify title using the ’main’ argument",
-sub = "The subtitle appears here! (Use the ’sub’ argument for this)",
-xlab = "The x-axis label is ’xlab’",
-ylab = "The y-axis label is ’ylab’" )
+main = "Fibonacci series",
+sub = "Fibonacci numbers and their index values",
+xlab = "Index",
+ylab = "Fibonacci numbers" )
 ```
 
 But what about the fonts? What if we want to change the font of the labels and title?
@@ -71,10 +71,13 @@ plot( x = Fibonacci,                     # the data to plot
 main = "The first 7 Fibonacci numbers",  # the title
 xlab = "Position in the sequence",       # x-axis label
 ylab = "The Fibonacci number",           # y-axis label
-font.main = 1,                          # plain text for title
-cex.main = 1,                           # normal size for title
-font.axis = 2,                          # bold text for numbering
-col.lab = "gray50" )                    # grey color for labels
+font.main = 6,                          # plain text for title
+cex.main = 2,                           # normal size for title
+font.axis = 1,                          # bold text for numbering
+col.lab = "salmon3",                    # grey color for labels
+col.main = "seagreen",
+col.axis = "deepskyblue",
+type = "s")                   
 
 #Try experimenting with the above values
 ```
@@ -117,7 +120,10 @@ print( teams )
 barplot( height = freq )  # specifying the argument name 
 barplot( freq )   # the lazier version 
 #But wait, where are the team labels we had saved in teams?
-barplot( height = freq, names.arg = teams ) #Adding labels to the bar plot
+barplot( height = freq, names.arg = teams, main = "AFL finalists", 
+         #sub = " Number of times a team reached finals", 
+         col = "red2", las = 2,
+         col.axis = "blue2") #Adding labels to the bar plot
 ```
 ```{r}
 #But a lot of our labels are missing in the plot. let's rotate them to fit all of the labels
@@ -147,8 +153,8 @@ barplot( height = freq,
          las=2,
          ylab = "Number of Finals",
          main = "Finals Played, 1987-2010",  # figure title
-         density = 10,                       # shade the bars
-         angle = 20 )                        # shading lines angle
+         density = 20,                       # shade the bars
+         angle = 90 )                        # shading lines angle
 
 
 ```
@@ -176,8 +182,10 @@ hist(afl.margins)
     
 ```{r}
 #Now, let's try changing the interval width
-hist( x = afl.margins, breaks = 3 )     
-hist( x = afl.margins, breaks = 0:116 )  
+hist( x = afl.margins, breaks = 3 )  
+hist( x = afl.margins, breaks = 4 )
+hist( x = afl.margins, breaks = 5 ) 
+hist( x = afl.margins, breaks = 0:116 ) 
 #You can also give a vector with specific positions where you want the breaks as an argument
 ```
 
@@ -192,7 +200,13 @@ hist( x = afl.margins, breaks = 0:116 )
 ```{r}
 #Try finding the ideal number of intervals for afl.margins using Sturges' rule of thumb 
 #You can use log() function to find the natural log of a number
+length(afl.margins)
+K = 1 + log(length(afl.margins))/log(2)
+K
+hist(afl.margins, breaks = 9)
+table(afl.margins)
 
+hist( afl.margins, breaks = "Sturges")
 ```
 
     - The downside to histograms is that they aren’t very compact and occupy a lot of space.
@@ -332,7 +346,7 @@ summary(afl.margins)
 
 
 ```{r}
-boxplot( x = afl.margins )
+boxplot( x = afl.margins, range = 100 )
 #Try changing the range to 100 [boxplot( x = afl.margins, range = 100 )]
 ```
 
@@ -368,12 +382,12 @@ head(afl2)
 ```
 ```{r}
 #Now let's plot box plots for the afl.margins for every year
-boxplot( formula = margin ~ year, + data = afl2)
+boxplot( formula = margin ~ year, + data == afl2)
 ```
 ```{r}
 #Now a bit of formatting. Do try out other formatting options from the book and try experimenting with values here.
 boxplot( formula =  margin ~ year,   # the formula
-         data = afl2,                # the data set
+         data == afl2,                # the data set
          xlab = "AFL season",        # x axis label
          ylab = "Winning Margin",    # y axis label
          frame.plot = FALSE,         # don’t draw a frame
@@ -412,7 +426,7 @@ The steepness of the line segments reflects the speed of change in the number of
 
 ```{r}
 #Line graph is similar to scatter plot. Let's use the 'work' dataset for plotting
-
+load("work.Rdata")
 df <-  aggregate(x = work$pay , by = list(work$weekday), FUN = mean)                #Finding the Mean pay on different days
 colnames(df) <- c("Days","Pay")                                                     #Adding column names
 df$Pay = round(df$Pay)                                                              #Rounding off the pay
@@ -458,4 +472,36 @@ axis(side = 1,
 dev.off()
 ```
 
+
 The end.
+
+
+My portion
+```{r}
+install.packages("dplyr")
+install.packages("tidyverse")
+library(tibble)
+```
+```{r}
+install.packages("cars")
+library(car)
+library(psych)
+library(lsr)
+```
+```{r}
+data(mtcars)
+mtcars
+```
+
+```{r}
+A = rnorm(n = 1000, mean = 100, sd = 50)
+a = hist(A)
+
+B = 0;
+for (i in 1:10) {
+  B.n = rnorm(n = 100, mean = 100, sd = 50)
+  B[i] = mean(B.n)
+}
+b = hist (B)
+```
+
